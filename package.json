@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/souporserious/react-tether",
   "dependencies": {
-    "tether": "https://github.com/rdjpalmner/tether#d28f5ee85"
+    "tether": "https://github.com/rdjpalmer/tether#d28f5ee85"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0",
