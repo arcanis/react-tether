@@ -1,4 +1,5 @@
-import React, { Component, Children, PropTypes } from 'react'
+import React, { Component, Children } from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Tether from 'tether'
 
@@ -69,21 +70,21 @@ class TetherComponent extends Component {
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
     this._update()
-    this._registerEventListeners()
   }
 
   componentDidUpdate(prevProps) {
+    this._targetNode = ReactDOM.findDOMNode(this)
     this._update()
   }
 
   componentWillUnmount() {
     this._destroy()
   }
-  
+
   getTetherInstance() {
     return this._tether
   }
-  
+
   disable() {
     this._tether.disable()
   }
@@ -91,15 +92,15 @@ class TetherComponent extends Component {
   enable() {
     this._tether.enable()
   }
-  
+
   on(event, handler, ctx) {
     this._tether.on(event, handler, ctx);
   }
-  
+
   once(event, handler, ctx) {
     this._tether.once(event, handler, ctx);
   }
-  
+
   off(event, handler) {
     this._tether.off(event, handler)
   }
@@ -107,14 +108,15 @@ class TetherComponent extends Component {
   position() {
     this._tether.position()
   }
-  
+
   _registerEventListeners() {
-    if (this.props.onUpdate) {
-      this.on('update', this.props.onUpdate);
-    }
-    if (this.props.onRepositioned) {
-      this.on('repositioned', this.props.onRepositioned);
-    }
+    this.on('update', () => {
+      return this.props.onUpdate && this.props.onUpdate.apply(this, arguments)
+    })
+
+    this.on('repositioned', () => {
+      return this.props.onRepositioned && this.props.onRepositioned.apply(this, arguments)
+    })
   }
 
   get _renderNode() {
@@ -165,8 +167,10 @@ class TetherComponent extends Component {
     // render element component into the DOM
     ReactDOM.unstable_renderSubtreeIntoContainer(
       this, elementComponent, this._elementParentNode, () => {
-        // don't update Tether until the subtree has finished rendering
-        this._updateTether()
+        // if we're not destroyed, update Tether once the subtree has finished rendering
+        if (this._elementParentNode) {
+          this._updateTether()
+        }
       }
     )
   }
@@ -195,6 +199,7 @@ class TetherComponent extends Component {
 
     if (!this._tether) {
       this._tether = new Tether(tetherOptions)
+      this._registerEventListeners()
     } else {
       this._tether.setOptions(tetherOptions)
     }
