@@ -1,4 +1,16 @@
 ## CHANGELOG
+### 0.5.7
+Update the target node when updating the component [PR #48](https://github.com/souporserious/react-tether/pull/48)
+
+Compatibility React 15.5.0 [PR #49](https://github.com/souporserious/react-tether/pull/49)
+
+### 0.5.6
+Properly call `onUpdate` and `onRepositioned` [PR #40](https://github.com/souporserious/react-tether/pull/40)
+
+Only render subtree if `destroy` method was not called yet [PR #41](https://github.com/souporserious/react-tether/pull/41)
+
+Use `babel-plugin-add-module-exports` for `dist` files
+
 ### 0.5.5
 Add `.npmignore` [PR #39](https://github.com/souporserious/react-tether/pull/39)
 

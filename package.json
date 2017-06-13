@@ -1,6 +1,6 @@
 {
   "name": "react-tether",
-  "version": "0.5.5",
+  "version": "0.5.7",
   "description": "Drop content anywhere on the page.",
   "main": "lib/react-tether.js",
   "scripts": {
@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/souporserious/react-tether",
   "dependencies": {
+    "prop-types": "^15.5.10",
     "tether": "https://github.com/rdjpalmer/tether#d28f5ee85"
   },
   "peerDependencies": {
